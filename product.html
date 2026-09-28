@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Product Details — Yaargamex</title><link rel="stylesheet" href="style.css"><script src="app.js"></script><script src="menu.js"></script></head>
+<body>
+<header class="nav"><a class="logo" href="index.html">YAAR<span>GAMEX</span></a><nav><a href="index.html#store">Store</a><a href="index.html#categories">Categories</a><a href="index.html#offers">Offers</a></nav></header>
+<main class="details-page"><a class="back" href="index.html#store">← Back to Store</a><div id="details"></div></main>
+<script>
+const d=data();
+const id=new URLSearchParams(location.search).get("id");
+const p=(d.products||[]).find(x=>String(x.id)===id);
+const a=analyticsData();
+if(p){a.productViews=a.productViews||{};a.productViews[id]=(a.productViews[id]||0)+1;saveAnalytics(a);}
+const el=document.getElementById("details");
+if(!p){el.innerHTML="<div class='not-found'><h1>Product not found</h1><a class='btn primary' href='index.html#store'>Back to Store</a></div>"}
+else{
+const photos=Array.isArray(p.images)&&p.images.length?p.images:(p.image?[p.image]:[]);
+el.innerHTML=`<div class="detail-layout">
+<div class="product-media"><button class="detail-image${photos.length?" is-zoomable":""}" id="mainMedia" type="button" ${photos.length?`aria-label="View ${esc(p.name)} photo full size"`:"disabled"}>${photos.length?`<img src="${photos[0]}" alt="${esc(p.name)}">`:"GAME"}</button>${photos.length>1?`<div class="media-thumbs" aria-label="Product photos">${photos.map((photo,i)=>`<button class="media-thumb${i===0?" active":""}" type="button" data-photo="${i}" aria-label="Show photo ${i+1}"><img src="${photo}" alt=""></button>`).join("")}</div>`:""}${p.video?`<div class="product-video"><div class="media-label">Product video</div><video src="${p.video}" controls playsinline preload="metadata">Your browser does not support video playback.</video></div>`:""}</div>
+<div class="detail-info"><small>${esc(p.category||"GAMING")}</small><h1>${esc(p.name)}</h1><p class="detail-desc">${esc(p.desc||"Digital gaming product.")}</p><div class="detail-price">$${esc(p.price)}</div><div class="detail-favorite">${favoriteButton(p.id)}</div><div class="detail-meta"><span>⚡ Digital Delivery</span><span>🔒 Secure Checkout</span><span>🎮 Gaming Product</span></div><a class="btn primary buy" href="https://tiktok.com/@ahmad_yaaaar" target="_blank" rel="noopener noreferrer">Buy Now</a></div>
+</div>${photos.length?`<div class="lightbox hidden" id="lightbox" role="dialog" aria-modal="true" aria-label="Full-size product photo"><button class="lightbox-close" type="button" aria-label="Close full-size photo">×</button><button class="lightbox-nav prev" type="button" aria-label="Previous photo">‹</button><img src="${photos[0]}" alt="${esc(p.name)} full-size photo"><button class="lightbox-nav next" type="button" aria-label="Next photo">›</button><div class="lightbox-count" aria-live="polite">1 / ${photos.length}</div></div>`:""}`;
+if(photos.length){
+ let current=0;const main=document.getElementById("mainMedia"),mainImg=main.querySelector("img"),box=document.getElementById("lightbox"),boxImg=box.querySelector("img"),count=box.querySelector(".lightbox-count");
+ const select=i=>{current=(i+photos.length)%photos.length;mainImg.src=photos[current];boxImg.src=photos[current];count.textContent=`${current+1} / ${photos.length}`;document.querySelectorAll(".media-thumb").forEach((b,n)=>b.classList.toggle("active",n===current))};
+ const open=()=>{box.classList.remove("hidden");document.body.classList.add("lightbox-open");box.querySelector(".lightbox-close").focus()};
+ const close=()=>{box.classList.add("hidden");document.body.classList.remove("lightbox-open");main.focus()};
+ main.onclick=open;document.querySelectorAll(".media-thumb").forEach(b=>b.onclick=()=>select(Number(b.dataset.photo)));box.querySelector(".prev").onclick=()=>select(current-1);box.querySelector(".next").onclick=()=>select(current+1);box.querySelector(".lightbox-close").onclick=close;box.onclick=e=>{if(e.target===box)close()};document.addEventListener("keydown",e=>{if(box.classList.contains("hidden"))return;if(e.key==="Escape")close();if(e.key==="ArrowLeft")select(current-1);if(e.key==="ArrowRight")select(current+1)});
+ }
+}
+</script></body></html>

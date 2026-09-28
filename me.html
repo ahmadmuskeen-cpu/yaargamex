@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Me — Yaargamex</title><link rel="stylesheet" href="style.css"><script src="menu.js"></script></head>
+<body>
+<header class="nav"><a class="logo" href="index.html">YAAR<span>GAMEX</span></a></header>
+<main class="simple-page"><div class="profile-card">
+<div class="profile-avatar" id="avatar">👤</div>
+<h1 id="name">Guest</h1>
+<form id="nameForm" class="name-form"><input id="nameInput" type="text" maxlength="40" placeholder="Enter your display name" aria-label="Display name"><button class="btn primary" id="saveNameBtn" type="submit" hidden>Save Name</button></form>
+<p id="profileText">Your personal Yaargamex profile</p>
+<label class="btn primary upload-btn">Choose Profile Photo<input id="photo" type="file" accept="image/*" hidden></label>
+<button class="btn ghost" id="remove">Remove Photo</button>
+<div class="profile-note">Your profile photo and display name are saved only in this browser on this prototype.</div>
+</div></main>
+<div class="bottom-nav"><a class="bottom-item" href="index.html"><span>⌂</span><b>Home</b></a><a class="bottom-item" href="messages.html"><span>💬</span><b>Messages</b></a><a class="bottom-item active" href="me.html"><span id="meNav">👤</span><b>Me</b></a></div>
+<script>
+const avatar=document.getElementById("avatar"),photo=document.getElementById("photo"),remove=document.getElementById("remove");
+const nameForm=document.getElementById("nameForm"),nameInput=document.getElementById("nameInput"),nameHeading=document.getElementById("name"),saveNameBtn=document.getElementById("saveNameBtn");
+function load(){const a=localStorage.getItem("yaargamex_avatar");avatar.innerHTML=a?`<img src="${a}" alt="Profile photo">`:"👤";document.getElementById("meNav").innerHTML=a?`<img src="${a}" style="width:28px;height:28px;border-radius:50%;object-fit:cover">`:"👤"}
+photo.onchange=()=>{const f=photo.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{localStorage.setItem("yaargamex_avatar",r.result);load()};r.readAsDataURL(f)};
+remove.onclick=()=>{localStorage.removeItem("yaargamex_avatar");load()};load();
+function loadName(){const n=localStorage.getItem("yaargamex_name");nameHeading.textContent=n||"Guest";nameInput.value=n||"";nameForm.hidden=!!n;saveNameBtn.hidden=true}
+nameInput.oninput=()=>{saveNameBtn.hidden=nameInput.value.trim().length===0};
+nameForm.onsubmit=e=>{e.preventDefault();const v=nameInput.value.trim();if(v)localStorage.setItem("yaargamex_name",v);else localStorage.removeItem("yaargamex_name");loadName()};
+loadName();
+</script></body></html>

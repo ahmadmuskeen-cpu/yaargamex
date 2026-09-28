@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>General Updates — Yaargamex</title><link rel="stylesheet" href="style.css"><script src="menu.js"></script></head>
+<body>
+<header class="nav"><a class="logo" href="index.html">YAAR<span>GAMEX</span></a></header>
+<main class="updates-page" id="updatesPage">
+  <div class="updates-head">
+    <small>GENERAL UPDATES</small>
+    <h1>Stay in the Loop</h1>
+    <p>Announcements, news, discounts and more — posted live by the Yaargamex team.</p>
+    <button class="btn ghost" id="adminAccessBtn" type="button">🔒 Admin Access</button>
+  </div>
+
+  <div class="updates-feed" id="updatesFeed"><p class="updates-status">Loading updates…</p></div>
+
+  <div class="updates-composer hidden" id="composer">
+    <div class="updates-composer-head"><h2>Post an Update</h2><button class="mini del" id="composerExit" type="button">Exit Admin</button></div>
+    <div class="composer-bar">
+      <select id="composerCategory" aria-label="Update category">
+        <option value="general">💬 General</option>
+        <option value="announcement">📢 Announcement</option>
+        <option value="news">📰 News</option>
+        <option value="discount">🏷️ Discount</option>
+        <option value="other">✨ Other</option>
+      </select>
+      <button id="composerAttach" type="button" aria-label="Attach photo or video">📎</button>
+      <button id="composerMic" type="button" aria-label="Record voice message">🎤</button>
+      <input id="composerText" type="text" placeholder="Type a message…" autocomplete="off">
+      <button id="composerSend" class="btn primary" type="button" aria-label="Send update">➤</button>
+      <input id="composerFile" type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4,video/webm,video/quicktime" hidden>
+    </div>
+    <div id="composerPreview" class="media-preview-grid"></div>
+    <p id="composerError" class="form-error" role="alert"></p>
+  </div>
+</main>
+
+<div id="codeModal" class="modal hidden">
+  <div class="modal-box">
+    <button class="close" id="closeCodeModal">×</button>
+    <h2>Admin Code Required</h2>
+    <p style="color:#9ba5b8;margin:8px 0 4px">Enter the Admin Code to unlock the General Updates posting area.</p>
+    <form id="codeForm" class="editor-grid">
+      <label>Admin Code<input id="adminCodeInput" type="password" autocomplete="off" required></label>
+      <p id="codeError" class="form-error" role="alert"></p>
+      <button class="btn primary" type="submit">Unlock Posting</button>
+    </form>
+  </div>
+</div>
+
+<div class="bottom-nav"><a class="bottom-item" href="index.html"><span>⌂</span><b>Home</b></a><a class="bottom-item" href="messages.html"><span>💬</span><b>Messages</b></a><a class="bottom-item" href="me.html"><span>👤</span><b>Me</b></a></div>
+<script src="updates.js"></script>
+<script src="general-updates.js"></script>
+</body></html>

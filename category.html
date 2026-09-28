@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Category — Yaargamex</title><link rel="stylesheet" href="style.css"><script src="menu.js"></script></head>
+<body>
+<header class="nav"><a class="logo" href="index.html">YAAR<span>GAMEX</span></a><nav><a href="index.html#store">Store</a><a href="index.html#categories">Categories</a><a href="index.html#offers">Offers</a><a href="favorite.html">Favorite</a></nav></header>
+<main class="category-page"><a class="back" href="index.html#categories">← Back to Categories</a><div id="categoryHeader"></div><div id="categoryProducts" class="product-grid"></div></main>
+<script>
+const esc=x=>String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+const d=JSON.parse(localStorage.getItem("yaargamex_data")||"{}");
+const id=Number(new URLSearchParams(location.search).get("id"));
+const c=(d.categories||[]).find(x=>x.id===id);
+const products=(d.products||[]).filter(x=>x.category===(c?.name||""));
+document.getElementById("categoryHeader").innerHTML=c?`<div class="category-hero"><div class="cat-icon big">${esc(c.icon||"🎮")}</div><div><small>CATEGORY</small><h1>${esc(c.name)}</h1><p>${esc(c.desc||"Explore products in this category.")}</p></div></div>`:"<h1>Category not found</h1>";
+document.getElementById("categoryProducts").innerHTML=products.length?products.map(p=>`<article class="product" onclick="location.href='product.html?id=${p.id}'"><div class="product-img">${p.image?`<img src="${p.image}" alt="${esc(p.name)}">`:"GAME"}</div><h3>${esc(p.name)}</h3><p>${esc(p.desc||"")}</p><div class="price"><b>$${esc(p.price)}</b><span>View Details →</span></div></article>`).join(""):"<div class='empty'><h2>No products yet</h2><p>Products for this category are coming soon.</p></div>";
+</script></body></html>

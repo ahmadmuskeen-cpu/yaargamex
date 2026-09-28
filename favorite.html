@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Favorite Items — Yaargamex</title><link rel="stylesheet" href="style.css"><script src="menu.js"></script></head>
+<body>
+<header class="nav"><a class="logo" href="index.html">YAAR<span>GAMEX</span></a><nav><a href="index.html#store" data-i18n="store">Store</a><a href="index.html#categories" data-i18n="categories">Categories</a><a href="favorite.html" class="active-link">Favorite</a></nav></header>
+<main class="favorite-page"><div class="head"><small>YOUR COLLECTION</small><h1>Favorite Items ❤️</h1><p class="favorite-intro">Products you saved for later.</p></div><div id="favoriteGrid" class="product-grid"></div></main>
+<div class="bottom-nav">
+<a class="bottom-item" href="index.html"><span>⌂</span><b data-i18n="home">Home</b></a>
+<a class="bottom-item active" href="favorite.html"><span>♥</span><b>Favorite</b></a>
+<a class="bottom-item" href="messages.html"><span>💬</span><b data-i18n="messages">Messages</b></a>
+<a class="bottom-item" href="me.html"><span id="navAvatar">👤</span><b data-i18n="me">Me</b></a>
+</div>
+<script src="app.js"></script><script>document.addEventListener("DOMContentLoaded",()=>{renderFavoriteCards("favoriteGrid");updateNavAvatar()});</script>
+</body></html>

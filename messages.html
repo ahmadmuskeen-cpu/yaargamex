@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Messages — Yaargamex</title><link rel="stylesheet" href="style.css"><script src="menu.js"></script></head>
+<body>
+<header class="nav"><a class="logo" href="index.html">YAAR<span>GAMEX</span></a></header>
+<main class="simple-page" id="messagesPage"><div class="simple-card"><div class="big-icon">💬</div><small>MESSAGES</small><h1>Stay Connected</h1><p>For updates, offers and direct contact, follow us on social media.</p>
+<div class="social-links" id="socialLinks"></div>
+</div></main>
+<div class="bottom-nav"><a class="bottom-item" href="index.html"><span>⌂</span><b>Home</b></a><a class="bottom-item active" href="messages.html"><span>💬</span><b>Messages</b></a><a class="bottom-item" href="me.html"><span>👤</span><b>Me</b></a></div>
+<script src="social.js"></script>
+<script>
+(function(){try{const s=(JSON.parse(localStorage.getItem("yaargamex_data")||"{}").settings)||{};if(s.messagesBg){const page=document.getElementById("messagesPage");page.style.backgroundImage=`url("${s.messagesBg}")`;page.classList.add("custom-bg")}}catch(e){}})();
+const a=localStorage.getItem("yaargamex_avatar");if(a)document.querySelectorAll(".bottom-item:last-child span")[0].innerHTML=`<img src="${a}" style="width:28px;height:28px;border-radius:50%;object-fit:cover">`;
+(async function(){
+ const escAttr=v=>String(v).replace(/"/g,"&quot;");
+ try{
+  const res=await fetch("/api/social-links");
+  const data=await res.json();
+  const links=data.links||{};
+  const el=document.getElementById("socialLinks");
+  el.innerHTML=SOCIAL_PLATFORMS.filter(p=>links[p.key]).map(p=>`<a href="${escAttr(links[p.key])}" target="_blank" rel="noopener noreferrer" aria-label="${p.label}">${p.icon}</a>`).join("");
+ }catch(e){}
+})();
+</script>
+</body></html>
